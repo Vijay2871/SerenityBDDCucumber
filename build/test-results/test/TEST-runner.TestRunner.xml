@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="runner.TestRunner" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-08-16T22:44:16" hostname="IT306586" time="13.505">
+<testsuite name="runner.TestRunner" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="IT306586" time="0.0">
   <properties/>
-  <testcase name="Registered user sees the dashboard" classname="runner.TestRunner" time="13.505"/>
-  <system-out><![CDATA[
-@SignIn
-Scenario: Registered user sees the dashboard ?[90m# src/test/resources/features/SignIn.feature:4?[0m
-  ?[32mGiven ?[0m?[32mI login as a registered user?[0m         ?[90m# steps.signInSteps.i_login_as_a_registered_user()?[0m
-]]></system-out>
-  <system-err><![CDATA[Starting ChromeDriver 104.0.5112.79 (3cf3e8c8a07d104b9e1260c910efb8f383285dc5-refs/branch-heads/5112@{#1307}) on port 56682
-Only local connections are allowed.
-Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
-ChromeDriver was started successfully.
-Aug 17, 2022 10:44:19 AM org.openqa.selenium.remote.ProtocolHandshake createSession
-INFO: Detected upstream dialect: W3C
-Aug 17, 2022 10:44:19 AM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
-WARNING: Unable to find an exact match for CDP version 104, so returning the closest version found: 103
-Aug 17, 2022 10:44:19 AM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
-INFO: Found CDP implementation for version 104 of 103
-?[32m?[1m??????????????????????????????????????????????????????????????????????????????????????[0m
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[?[32m?[1m??????????????????????????????????????????????????????????????????????????????????????[0m
 ?[32m?[1m??[0m Share your Cucumber Report with your team at ?[36m?[1m?[4mhttps://reports.cucumber.io?[0m          ?[32m?[1m??[0m
 ?[32m?[1m??[0m Activate publishing with one of the following:                                    ?[32m?[1m??[0m
 ?[32m?[1m??[0m                                                                                   ?[32m?[1m??[0m

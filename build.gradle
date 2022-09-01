@@ -5,16 +5,20 @@ buildscript {
         }
     }
     dependencies {
-        classpath "net.serenity-bdd:serenity-gradle-plugin:3.3.0"
+        classpath "net.serenity-bdd:serenity-gradle-plugin:3.3.2"
+        classpath 'net.serenity-bdd:serenity-single-page-report:3.3.2'
+        classpath "net.serenity-bdd:serenity-json-summary-report:3.3.2"
+
     }
 }
 
 plugins {
-    id "net.serenity-bdd.serenity-gradle-plugin" version "3.3.0"
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.3.2"
     id 'java'
     id 'eclipse'
     id 'idea'
 }
+
 
 defaultTasks 'clean', 'test', 'aggregate'
 
@@ -22,39 +26,69 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 ext {
-    serenityCoreVersion = '3.3.1'
-    serenityCucumberVersion = '3.3.1'
+    serenityCoreVersion = '3.3.2'
+    serenityCucumberVersion = '3.3.2'
     junitVersion = '5.9.0'
     assertJVersion = '3.23.1'
-    lombokVersion = '1.18.24'
+    hamcrest = '2.2'
+    slf4japi = ':1.6.1'
+    slf4jVersion = '1.7.7'
+    lombok = '1.18.24'
+    logbackVersion = '1.2.11'
 }
 
 dependencies {
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+
+    implementation 'net.serenity-bdd:serenity-single-page-report:3.3.2'
+    implementation 'net.serenity-bdd:serenity-reports:3.3.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.13.3'
+    implementation 'com.github.javafaker:javafaker:1.0.2'
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation("net.serenity-bdd:serenity-model:${serenityCoreVersion}")
+
+
     testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-rest-assured:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-cucumber:${serenityCucumberVersion}",
             "org.junit.jupiter:junit-jupiter-api:${junitVersion}",
             "org.junit.jupiter:junit-jupiter-engine:${junitVersion}",
             "org.assertj:assertj-core:${assertJVersion}",
-            "org.projectlombok:lombok:${lombokVersion}"
+            "org.hamcrest:hamcrest-library:${hamcrest}",
+            "org.assertj:assertj-core:${assertJVersion}"
 }
-
 test {
-    useJUnitPlatform()
-    testLogging.showStandardStreams = true
+//    testLogging.showStandardStreams = true
     systemProperties System.getProperties()
+    maxParallelForks = 8
 }
+serenity {
+    // Specify the root package of any JUnit acceptance tests to appear in the Serenity report
+    testRoot = "components"
+    // Specify the root directory of any Cucumber feature files
+    requirementsDir = "src/test/resources/features"
 
+}
 gradle.startParameter.continueOnFailure = true
 
-serenity {
-    reports = ["single-page-html"]
+test {
+    // Clear previous reports before running test task
+    dependsOn clearReports
 
-    testRoot="starter"
+    // Always run tests
+    outputs.upToDateWhen { false }
+    finalizedBy aggregate
+}
+serenity {
+    reports = ['single-page-html', 'json-summary']
 }
 
-test.finalizedBy(aggregate)
+
